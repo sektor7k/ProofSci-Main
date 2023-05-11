@@ -1,0 +1,183 @@
+* {
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+
+    color: aliceblue;
+
+}
+
+
+h1 {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+
+}
+
+form {
+
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px #d0d0d0;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    font-size: 20px;
+    transition: 0.3s;
+    
+}
+.form-group:hover{
+    font-size: 17px;
+    color: #00FFFF;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type=text],
+textarea,
+select {
+    border: 1px solid #d0d0d0;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    margin-top: 5px;
+    background-color: transparent;
+}
+
+textarea#nft-description {
+    height: 100px;
+}
+
+textarea#project-description {
+    height: 120px;
+}
+
+button[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+button[type=submit]:hover {
+    background-color: #3e8e41;
+}
+
+#avatar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#avatar-preview {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+#avatar {
+    display: none;
+}
+
+#avatar-label {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#avatar-label:hover {
+    background-color: #3e8e41;
+}
+
+input[type=text],
+input[type=password],
+textarea {
+    color: #fff;
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+    outline: none;
+    border: 2px solid transparent;
+    box-shadow: 0 0 10px 1px #00FFFF;
+}
+
+textarea:focus::placeholder,
+input:focus::placeholder,
+select:focus::placeholder {
+    color: #00FFFF;
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+    font-size: 14px;
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+    transition: all 0.3s ease-in-out;
+    font-size: 16px;
+}
+
+select {
+    background-color: #1E1F29;
+    /* açılan tablonun arka planı koyu mavi olsun */
+    color: #fff;
+    /* select içindeki yazıların rengi beyaz olsun */
+    border-radius: 5px;
+    /* açılan pencereninde border radius olsun */
+}
+
+select:hover,
+select:focus {
+    
+    border-color: #0a1a2c;
+    /* tıklanılan yerin borderı box-shadow ile mavi neona dönüşsün */
+    outline: none;
+    border: 2px solid transparent;
+    box-shadow: 0 0 10px 1px #00FFFF;
+    border-radius: 5px;
+}
+select option {  
+    background-color: transparent; /* seçeneklerin arka planı saydam olsun */
+    color: white; /* yazıların rengi beyaz olsun */
+  }
+
+select option:hover {
+    font-size: 1.2em;
+    /* üstüne getirilen her seçeneğin font size ı biraz artsın */
+    transition: font-size 0.2s ease-in-out;
+    /* transitte olsun */
+}

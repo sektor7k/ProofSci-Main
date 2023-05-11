@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>login</title>
+    <link rel="stylesheet" href="/login/login.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<style>
+    .elementor-kit-35 {
+        --e-global-color-primary: #FFFFFF;
+        --e-global-color-secondary: #FFFFFF;
+        --e-global-color-text: #FFFFFF;
+        --e-global-color-accent: #00FFFF;
+        --e-global-typography-primary-font-family: "Kanit";
+        --e-global-typography-primary-font-weight: 600;
+        --e-global-typography-secondary-font-family: "Kanit";
+        --e-global-typography-secondary-font-weight: 400;
+        --e-global-typography-text-font-family: "Kanit";
+        --e-global-typography-text-font-weight: 400;
+        --e-global-typography-accent-font-family: "Kanit";
+        --e-global-typography-accent-font-weight: 500;
+        font-family: kanit, Sans-serif;
+        background-color: transparent;
+        background-image: linear-gradient(90deg, #001324 0%, #000000 100%)
+    }
+</style>
+<body class="elementor-kit-35 ">
+    <!-- NAVBAR CREATION -->
+   <header class="header">
+    <nav class="navbar">
+        <a onclick="location.href='/'">Proof Market</a>
+        <a onclick="location.href='profile'">Profile</a>
+          <a onclick="location.href='/create'">Create Project</a>
+          <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to=proofscidestek@gmail.com">Contact</a>
+          
+    </nav>
+    
+   </header>
+    <!-- LOGIN FORM CREATION -->
+    <div class="background"></div>
+    <div class="container">
+        <div class="item">
+            <h2 class="logo"><img src="/wp-content/uploads/2023/04/logo6.png" alt="" height="130px"></h2>
+            <div class="text-item">
+                <h2><span style="font-size: 30px;">Welcome!</span> <br><span>
+                    To Proof Sci
+                </span></h2>
+                <p>Proof Sci is a decentralized science and technology platform. Users can create profiles on the platform and generate project ideas.</p>
+                <div class="social-icon">
+                    <a href="#"><i class='bx bxl-facebook'></i></a>
+                    <a href="https://twitter.com/ProofSci"><i class='bx bxl-twitter'></i></a>
+                    <a href="#"><i class='bx bxl-youtube'></i></a>
+                    <a href="#"><i class='bx bxl-instagram'></i></a>
+                    <a href="#"><i class='bx bxl-linkedin'></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="login-section">
+            <div class="form-box login">
+                <form action="/login" method="post">
+                    <h2>Sign In</h2>
+                    <div class="input-box" method="post">
+                        <span class="icon"><i class='bx bxs-envelope'></i></span>
+                        <input type="email" name="email" required style="color: #FFFFFF;">
+                        <label >Email</label >
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-lock-alt' ></i></span>
+                        <input type="password" name="password" required style="color: #FFFFFF;">
+                        <label>Password</label>
+                    </div>
+                    <div class="remember-password">
+                        <label for=""><input type="checkbox">Remember Me</label>
+                        <a href="#">Forget Password</a>
+                    </div>
+                    <button class="btn" type="Submit" onclick="location.href='signin'">Login In</button>
+
+                    {% if errormail %}
+                    <div class="hata create-accoun" style="display: block;">
+                        <p style="color: #bd1812; margin-top: 10px; font-size: 17px;">wrong mail !</p>
+                    </div>
+                    {% else %}
+                    <div class="hata"style="display: none;">
+                        <p>wrong mail !</p>
+                    </div>
+                    {% endif %}
+
+                    {% if error %}
+                    <div class="hata create-accoun" style="display: block;">
+                        <p style="color: #bd1812; margin-top: 10px; font-size: 17px;">wrong password !</p>
+                    </div>
+                    {% else %}
+                    <div class="hata"style="display: none;">
+                        <p>wrong password !</p>
+                    </div>
+                    {% endif %}
+
+                    <div class="create-account">
+                        <p>Create A New Account? <a class="register-link" onclick="location.href='signin'">Sign Up</a></p>
+                    </div>
+                    
+                </form>
+            </div>
+            
+        </div>
+    </div>
+     <!-- SIGN UP FORM CREATION -->
+
+    <script src="/login/login.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="257" height="223" viewBox="0 0 257 223">
+	<g xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com" data-bx-workspace="master" viewBox="0 0 257 223">
+		<defs>
+			<filter id="Tracciato_1074">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="6.5" result="blur"/>
+      <feFlood flood-opacity="0.561" result="color"/>
+      <feComposite operator="out" in="SourceGraphic" in2="blur"/>
+      <feComposite operator="in" in="color"/>
+      <feComposite operator="in" in2="SourceGraphic"/>
+    </filter>
+		</defs>
+		<g transform="matrix(1, 0, 0, 1, -19.5, -19.5)" filter="url(#Tracciato_1074)">
+			<path id="Tracciato_1074-2" d="M192.75,0,257,111.5,192.75,223H64.25L0,111.5,64.25,0Z" transform="translate(19.5 19.5)" fill="#000"/>
+		</g>
+	</g>
+</svg>

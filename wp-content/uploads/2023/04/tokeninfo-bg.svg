@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="415.617" height="139.001" viewBox="0 0 415.617 139.001">
+  <defs>
+    <linearGradient id="linear-gradient" x1="-0.147" y1="-0.227" x2="0.927" y2="1.051" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#052A34"/>
+      <stop offset="1" stop-color="#1D002E"/>
+    </linearGradient>
+  </defs>
+  <path id="Sottrazione_17" data-name="Sottrazione 17" d="M899,2175.1H506a22,22,0,0,1-22-22v-95a22,22,0,0,1,22-22H899v139Z" transform="translate(-483.383 -2036.098)" fill="url(#linear-gradient)"/>
+  <path id="Sottrazione_19" data-name="Sottrazione 19" d="M-988.5,1275h-9.383a23.034,23.034,0,0,1-15.557-5.847,18.954,18.954,0,0,1-6.443-14.117v-1.361h1v1.361a17.45,17.45,0,0,0,1.65,7.418,19,19,0,0,0,4.5,6.057,21.189,21.189,0,0,0,6.675,4.085,22.742,22.742,0,0,0,8.174,1.5h9.383V1275Zm-30.383-116.608h-1v-2.269a18.951,18.951,0,0,1,6.443-14.116,23.035,23.035,0,0,1,15.557-5.847h9.383v.907h-9.383a22.716,22.716,0,0,0-8.174,1.5,21.152,21.152,0,0,0-6.675,4.084,19,19,0,0,0-4.5,6.058,17.435,17.435,0,0,0-1.65,7.417v2.268Z" transform="translate(1020.5 -1136.16)" fill="aqua"/>
+  <line id="Linea_12" data-name="Linea 12" y2="45" transform="translate(1 47.5)" fill="none" stroke="aqua" stroke-linecap="round" stroke-width="2"/>
+</svg>
