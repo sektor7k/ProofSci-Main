@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="profile" href="https://gmpg.org/xfn/11">
     <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
-    <title>WINK - THE FIRST Web3 SOCIAL NETWORK</title>
+    <title>Proof Sci</title>
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -611,8 +611,8 @@
     <link rel='stylesheet' id='elementor-frontend-css'
         href='https://winks.finance/wp-content/plugins/elementor/assets/css/frontend-lite.min.css?ver=3.12.1'
         media='all' />
-    <link rel='stylesheet' id='elementor-post-35-css'
-        href='https://winks.finance/wp-content/uploads/elementor/css/post-35.css?ver=1681564479' media='all' />
+    <link rel='stylesheet' id='elementor-post-35-css' href='/wp-content/uploads/elementor/css/post-36.css'
+        media='all' />
     <link rel='stylesheet' id='swiper-css'
         href='https://winks.finance/wp-content/plugins/elementor/assets/lib/swiper/css/swiper.min.css?ver=5.3.6'
         media='all' />
@@ -854,7 +854,7 @@
                 data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
                 <div class="elementor-element elementor-element-166ba44 elementor-widget__width-initial elementor-widget-tablet__width-inherit elementor-widget-mobile__width-initial elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-image"
                     data-id="166ba44" data-element_type="widget" data-widget_type="image.default">
-                    <div class="elementor-widget-container" >
+                    <div class="elementor-widget-container">
                         <style>
                             /*! elementor - v3.12.1 - 02-04-2023 */
                             .elementor-widget-image {
@@ -867,7 +867,7 @@
 
                             .elementor-widget-image a img[src$=".svg"] {
                                 width: 48px;
-                                
+
                             }
 
                             .elementor-widget-image img {
@@ -884,7 +884,7 @@
                 <div class="elementor-element elementor-element-51b2000 elementor-nav-menu__align-center elementor-widget__width-initial elementor-hidden-tablet elementor-hidden-mobile elementor-nav-menu--dropdown-tablet elementor-nav-menu__text-align-aside elementor-nav-menu--toggle elementor-nav-menu--burger elementor-widget elementor-widget-nav-menu"
                     data-id="51b2000" data-element_type="widget"
                     data-settings="{&quot;layout&quot;:&quot;horizontal&quot;,&quot;submenu_icon&quot;:{&quot;value&quot;:&quot;&lt;svg class=\&quot;e-font-icon-svg e-fas-caret-down\&quot; viewBox=\&quot;0 0 320 512\&quot; xmlns=\&quot;http:\/\/www.w3.org\/2000\/svg\&quot;&gt;&lt;path d=\&quot;M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z\&quot;&gt;&lt;\/path&gt;&lt;\/svg&gt;&quot;,&quot;library&quot;:&quot;fa-solid&quot;},&quot;toggle&quot;:&quot;burger&quot;}"
-                    data-widget_type="nav-menu.default" >
+                    data-widget_type="nav-menu.default">
                     <div class="elementor-widget-container">
                         <link rel="stylesheet"
                             href="https://winks.finance/wp-content/plugins/elementor-pro/assets/css/widget-nav-menu.min.css">
@@ -897,15 +897,29 @@
                                         class="elementor-item elementor-item-anchor">Proof Market</a>
                                 </li>
 
+                                {% if user%}
                                 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6981">
-                                    <a onclick="location.href='profile'" class="elementor-item">Profile</a>
+                                    <a onclick="location.href='profile'" class="elementor-item"
+                                        tabindex="-1">Profile</a>
                                 </li>
+                                {% else %}
+                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6981"
+                                    style="display: none;">
+                                    <a onclick="location.href='profile'" class="elementor-item"
+                                        tabindex="-1">Profile</a>
+                                </li>
+                                {% endif %}
                                 <li
                                     class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-8689">
                                     <a onclick="location.href='create'" aria-current="page"
                                         class="elementor-item elementor-item-anchor">Create Project</a>
                                 </li>
-                                
+                                <li
+                                    class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-8689">
+                                    <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to=proofscidestek@gmail.com" target="_blank"
+                                        aria-current="page" class="elementor-item elementor-item-anchor">Contact</a>
+                                </li>
+
                             </ul>
                         </nav>
                         <div class="elementor-menu-toggle" role="button" tabindex="0" aria-label="Menu di commutazione"
@@ -934,15 +948,29 @@
                                         class="elementor-item elementor-item-anchor" tabindex="-1">Proof Market</a>
                                 </li>
 
+                                {% if user%}
                                 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6981">
-                                    <a onclick="location.href='profile'" class="elementor-item" tabindex="-1">Profile</a>
+                                    <a onclick="location.href='profile'" class="elementor-item"
+                                        tabindex="-1">Profile</a>
+                                </li>
+                                {% else %}
+                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6981"
+                                    style="display: none;">
+                                    <a onclick="location.href='profile'" class="elementor-item"
+                                        tabindex="-1">Profile</a>
+                                </li>
+                                {% endif %}
+                                <li
+                                    class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-8689">
+                                    <a onclick="location.href='create'" aria-current="page"
+                                        class="elementor-item elementor-item-anchor" tabindex="-1">Create Project</a>
                                 </li>
                                 <li
                                     class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-8689">
-                                    <a onclick="location.href='create'" aria-current="page" class="elementor-item elementor-item-anchor"
-                                        tabindex="-1">Create Project</a>
+                                    <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to=proofscidestek@gmail.com" target="_blank"
+                                        aria-current="page" class="elementor-item elementor-item-anchor">Contact</a>
                                 </li>
-                                
+
                             </ul>
                         </nav>
                     </div>
@@ -960,23 +988,26 @@
                     </div>
 
                     <div class="elementor-element elementor-element-25cf7f6 elementor-widget elementor-widget-button"
-                        data-id="25cf7f6" data-element_type="widget" data-widget_type="button.default" style="margin-right: 10px;">
+                        data-id="25cf7f6" data-element_type="widget" data-widget_type="button.default"
+                        style="margin-right: 10px;">
                         <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
                                 {% if user %}
-                                <button class="elementor-button-link elementor-button elementor-size-sm" role="button" onclick="location.href='logout'">
+                                <button class="elementor-button-link elementor-button elementor-size-sm" role="button"
+                                    onclick="location.href='logout'">
                                     <span class="elementor-button-content-wrapper">
                                         <span class="elementor-button-text">{{user}}</span>
                                     </span>
                                 </button>
                                 {% else %}
-                                <button class="elementor-button-link elementor-button elementor-size-sm" role="button" onclick="location.href='login'">
+                                <button class="elementor-button-link elementor-button elementor-size-sm" role="button"
+                                    onclick="location.href='login'">
                                     <span class="elementor-button-content-wrapper">
                                         <span class="elementor-button-text">Login</span>
                                     </span>
                                 </button>
                                 {% endif %}
-                                
+
 
                             </div>
                         </div>
@@ -991,12 +1022,12 @@
                                         <span class="elementor-button-text" id="address">Connect</span>
                                     </span>
                                 </button>
-                                
+
                             </div>
                         </div>
                     </div>
                     <script src="/Keplr/keplr.js"></script>
-                    
+
                     <div class="elementor-element elementor-element-63ca5a3 elementor-widget__width-auto elementor-hidden-desktop elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-image"
                         data-id="63ca5a3" data-element_type="widget" data-widget_type="image.default">
                         <div class="elementor-widget-container">
@@ -1050,7 +1081,7 @@
                                         <a onclick="location.href='create'" aria-current="page"
                                             class="elementor-item elementor-item-anchor">CreateProject</a>
                                     </li>
-                                    
+
                                 </ul>
                             </nav>
                             <nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" aria-hidden="true">
@@ -1085,36 +1116,36 @@
                                     <div class="trp_language_switcher_shortcode">
                                         <div class="trp-language-switcher trp-language-switcher-container"
                                             data-no-translation>
-                                            
-                                            
-                                            
+
+
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
-        
+
     </div>
-    
-        
-            <div class="elementor elementor-64">
 
 
-                <div class="elementor-element elementor-element-d5be790 e-con-full">
+    <div class="elementor elementor-64">
 
-                    market
 
-                </div>
-            </div>
-       
-    
+        <div class="elementor-element elementor-element-d5be790 e-con-full">
 
-    
+            market
+
+        </div>
+    </div>
+
+
+
+
 
 
 

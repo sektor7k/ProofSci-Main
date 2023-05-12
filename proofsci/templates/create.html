@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="profile" href="https://gmpg.org/xfn/11">
     <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
-    <title>WINK - THE FIRST Web3 SOCIAL NETWORK</title>
+    <title>Proof Sci</title>
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -909,13 +909,27 @@
                                         class="elementor-item elementor-item-anchor">Proof Market</a>
                                 </li>
 
+                                {% if user%}
                                 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6981">
-                                    <a onclick="location.href='profile'" class="elementor-item">Profile</a>
+                                    <a onclick="location.href='profile'" class="elementor-item"
+                                        tabindex="-1">Profile</a>
                                 </li>
+                                {% else %}
+                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6981"
+                                    style="display: none;">
+                                    <a onclick="location.href='profile'" class="elementor-item"
+                                        tabindex="-1">Profile</a>
+                                </li>
+                                {% endif %}
                                 <li
                                     class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-8689">
                                     <a onclick="location.href='create'" aria-current="page"
                                         class="elementor-item elementor-item-anchor">Create Project</a>
+                                </li>
+                                <li
+                                    class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-8689">
+                                    <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to=proofscidestek@gmail.com" target="_blank"
+                                        aria-current="page" class="elementor-item elementor-item-anchor">Contact</a>
                                 </li>
 
                             </ul>
@@ -946,14 +960,27 @@
                                         class="elementor-item elementor-item-anchor" tabindex="-1">Proof Market</a>
                                 </li>
 
+                                {% if user%}
                                 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6981">
                                     <a onclick="location.href='profile'" class="elementor-item"
                                         tabindex="-1">Profile</a>
                                 </li>
+                                {% else %}
+                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6981"
+                                    style="display: none;">
+                                    <a onclick="location.href='profile'" class="elementor-item"
+                                        tabindex="-1">Profile</a>
+                                </li>
+                                {% endif %}
                                 <li
                                     class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-8689">
                                     <a onclick="location.href='create'" aria-current="page"
                                         class="elementor-item elementor-item-anchor" tabindex="-1">Create Project</a>
+                                </li>
+                                <li
+                                    class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-8689">
+                                    <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to=proofscidestek@gmail.com" target="_blank"
+                                        aria-current="page" class="elementor-item elementor-item-anchor">Contact</a>
                                 </li>
 
                             </ul>
@@ -1118,48 +1145,54 @@
 
     <link rel="stylesheet" href="/createform/form.css">
     <script src="/createform/form.js"></script>
+    
 
     <div class="elementor elementor-64">
 
 
         <div class="elementor-element elementor-element-d5be790 e-con-full">
 
+            
+
             <h1>Create Project Form</h1>
             <div class="container">
-                <form>
+                <form action="/create" method="post">
                     <div id="avatar-container">
                         <img id="avatar-preview" src="#" alt="">
                         <div class="elementor-element elementor-element-25cf7f6 elementor-widget elementor-widget-button"
-                        data-id="25cf7f6" data-element_type="widget" data-widget_type="button.default" style="margin-top: 20px;">
-                        <div class="elementor-widget-container">
-                            <div class="elementor-button-wrapper">
-                                <button id="connect-btn"
-                                    class="elementor-button-link elementor-button elementor-size-sm" role="button" style="border: none;">
-                                    <span class="elementor-button-content-wrapper">
-                                        <span class="elementor-button-text" id="address"><label for="avatar">NFT IMG</label></span>
-                                    </span>
-                                </button>
+                            data-id="25cf7f6" data-element_type="widget" data-widget_type="button.default"
+                            style="margin-top: 20px;">
+                            <div class="elementor-widget-container">
+                                <div class="elementor-button-wrapper">
+                                    <button id="connect-btn"
+                                        class="elementor-button-link elementor-button elementor-size-sm" role="button"
+                                        style="border: none;">
+                                        <span class="elementor-button-content-wrapper">
+                                            <span class="elementor-button-text" id="address"><label for="avatar">NFT
+                                                    IMG</label></span>
+                                        </span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                        
+
                         <input type="file" id="avatar" name="avatar" accept="image/*" onchange="previewAvatar(event)">
                     </div>
                     <div class="form-group">
-                        <label for="nft-name">NFT Name</label>
-                        <input type="text" id="nft-name" name="nft-name" required>
+                        <label for="nft-name">NFT Name </label>
+                        <input type="text" id="nft-name" name="nft_name" required>
                     </div>
                     <div class="form-group">
                         <label for="nft-aciklama">NFT Descriptin</label>
-                        <textarea id="nft-aciklama" name="nft-aciklama" required></textarea>
+                        <textarea id="nft-aciklama" name="nft_description" required></textarea>
                     </div>
                     <div class="form-group">
                         <label for="proje-adi">Project Name </label>
-                        <input type="text" id="proje-adi" name="proje-adi" required>
+                        <input type="text" id="proje-adi" name="project_name" required>
                     </div>
                     <div class="form-group">
                         <label for="proje-aciklama">Project Description</label>
-                        <textarea id="proje-aciklama" name="proje-aciklama" required></textarea>
+                        <textarea id="proje-aciklama" name="project_description" required></textarea>
                     </div>
                     <div class="form-group">
                         <label for="klinik-asama">Clinical Stage</label>
@@ -1194,7 +1227,7 @@
                     </div>
                     <div class="form-group">
                         <label for="ulke">Country</label>
-                        <select id="ulke" name="ulke" required >
+                        <select id="ulke" name="ulke" required>
                             <option value="">Please select one</option>
                             <option value="1">Algeria</option>
                             <option value="2">Argentina</option>
@@ -1256,17 +1289,19 @@
                             <option value="58">Netherlands</option>
                             <option value="59">Norway</option>
                         </select>
-                        
+
                     </div>
 
 
 
                     <div class="elementor-element elementor-element-25cf7f6 elementor-widget elementor-widget-button"
-                        data-id="25cf7f6" data-element_type="widget" data-widget_type="button.default" style="margin-top: 30px;">
-                        <div class="elementor-widget-container" >
+                        data-id="25cf7f6" data-element_type="widget" data-widget_type="button.default"
+                        style="margin-top: 30px;">
+                        <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                                <button id="connect-btn"
-                                    class="elementor-button-link elementor-button elementor-size-sm" role="button" style="border: none; width: 100px;">
+                                <button id="connect-btn" type="Submit"
+                                    class="elementor-button-link elementor-button elementor-size-sm" role="button"
+                                    style="border: none; width: 100px;">
                                     <span class="elementor-button-content-wrapper">
                                         <span class="elementor-button-text" id="address">Create</span>
                                     </span>
@@ -1279,6 +1314,7 @@
                 </form>
             </div>
 
+            
 
 
 

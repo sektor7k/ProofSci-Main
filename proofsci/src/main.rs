@@ -49,11 +49,12 @@ async fn main() -> std::io::Result<()> {
             .app_data(web::Data::new(conn.clone()))
             .service(web::resource("/").route(web::get().to(index)))
             .service(web::resource("/profile").route(web::get().to(index2)))
-            .service(web::resource("/create").route(web::get().to(index3)))
+            .service(web::resource("/create").route(web::post().to(post_form))
+            .route(web::get().to(create)))
             .service(
                 web::resource("/login")
                     .route(web::get().to(login))
-                    .route(web::post().to(post_login)),
+                    .route(web::post().to(post_login)), 
             )
             .service(
                 web::resource("signin")

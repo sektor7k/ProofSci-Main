@@ -1,10 +1,12 @@
 use actix_session::Session;
-use actix_web::{error, http, web, Error, HttpResponse, Result};
+use actix_web::{error, http, web::{self, Form}, Error, HttpResponse, Result};
 use bcrypt::DEFAULT_COST;
 use serde::*;
 use sqlx::SqlitePool;
 use tera::{Context, Tera};
 use validator::Validate;
+use sqlx::Pool;
+use sqlx::Sqlite;
 
 #[derive(Debug, Deserialize, Validate, sqlx::FromRow)]
 pub struct LoginUser {
@@ -32,6 +34,14 @@ pub struct User {
     password: String,
 }
 
+#[derive(Debug, Deserialize, sqlx::FromRow, Serialize)]
+pub struct FormUser {
+    nft_name: String,
+    nft_description: String,
+    project_name: String,
+    project_description: String
+}
+
 pub async fn index(tmpl: web::Data<Tera>, session: Session) -> Result<HttpResponse, Error> {
     let mut ctx = Context::new();
 
@@ -53,18 +63,6 @@ pub async fn index2(tmpl: web::Data<Tera>, session: Session) -> Result<HttpRespo
 
     let a = tmpl
         .render("profile.html", &ctx)
-        .map_err(error::ErrorInternalServerError)?;
-    Ok(HttpResponse::Ok().body(a))
-}
-pub async fn index3(tmpl: web::Data<Tera>, session: Session) -> Result<HttpResponse, Error> {
-    let mut ctx = Context::new();
-
-    if let Some(user) = session.get::<String>("user")? {
-        ctx.insert("user", &user)
-    }
-
-    let a = tmpl
-        .render("create.html", &ctx)
         .map_err(error::ErrorInternalServerError)?;
     Ok(HttpResponse::Ok().body(a))
 }
@@ -100,6 +98,8 @@ pub async fn post_login(
             Ok(user) => {
                 if bcrypt::verify(&login_form.password, &user.password).unwrap() {
                     session.insert("user", &user.username)?;
+                    session.insert("user_id", &user.id)?;
+                    //session.set("user_id", &user.id); 
                     return Ok(redirct("/"));
                 } else {
                     let mut ctx = tera::Context::new();
@@ -175,6 +175,7 @@ pub async fn post_signin(
         match add_user {
             Ok(_) => {
                 session.insert("user", &user.username)?;
+                
                 return Ok(redirct("/"));
             }
             Err(_) => {
@@ -191,3 +192,93 @@ pub async fn post_signin(
     }
     return Ok(redirct("/signin"));
 }
+
+pub async fn create(tmpl: web::Data<Tera>, session: Session) -> Result<HttpResponse, Error> {
+    let mut ctx = Context::new();
+
+    if let Some(user) = session.get::<String>("user")? {
+        ctx.insert("user", &user)
+    }
+
+    let a = tmpl
+        .render("create.html", &ctx)
+        .map_err(error::ErrorInternalServerError)?;
+    Ok(HttpResponse::Ok().body(a))
+}
+
+pub async fn post_form(
+    _tmpl: web::Data<Tera>,
+    form2: web::Form<FormUser>,
+    session: Session,
+    conn: web::Data<SqlitePool>,
+) -> Result<HttpResponse, Error> {
+    //let ctx = Context::new();
+
+    let user_id = session.get::<i32>("user_id").unwrap_or(Some(0));
+   
+    
+
+    let user = form2.into_inner();
+
+    let forms = sqlx::query("insert into forms (nft_name, nft_description, project_name, project_description, user_id ) values($1, $2, $3, $4, $5)")
+        .bind(&user.nft_name)
+        .bind(&user.nft_description)
+        .bind(&user.project_name)
+        .bind(&user.project_description)
+        .bind(user_id)
+        .execute(&**conn)
+        .await;
+    match forms {
+        Ok(_) => {
+            
+            
+            return Ok(redirct("/profile"));
+            
+        }
+        Err(_) => {
+            let mut ctx = tera::Context::new();
+            ctx.insert("user_id", &user_id);
+
+            let rendered = _tmpl
+                .render("create.html", &ctx)
+                .map_err(error::ErrorInternalServerError)?;
+
+            return Ok(HttpResponse::Ok().content_type("text/html").body(rendered));
+        }
+    };
+}
+
+// pub async fn get_forms(conn: &SqlitePool, user_id: i32) -> Result<Vec<FormUser>, sqlx::Error> {
+//     let forms = sqlx::query_as::<_, FormUser>("SELECT * FROM forms WHERE user_id = $1")
+//         .bind(user_id)
+//         .fetch_all(conn)
+//         .await?;
+
+//     Ok(forms)
+// }
+
+
+
+
+// pub async fn profile(
+//     tmpl: web::Data<Tera>,
+//     session: Session,
+//     conn: web::Data<SqlitePool>,
+// ) -> Result<HttpResponse, Error> {
+//     // Oturum açmış kullanıcının kimliğini al
+//     let user_id = session.get::<i32>("user_id").unwrap_or(Some(0));
+
+//     // Kullanıcının formlarını al
+//     let forms = get_forms(&**conn, user_id.unwrap_or(0)).await?;
+
+//     // Şablon bağlamını oluştur
+//     let mut ctx = tera::Context::new();
+//     ctx.insert("forms", &forms);
+
+//     // Şablonu işle ve HTTP yanıtını oluştur
+//     let rendered = tmpl
+//         .render("profile.html", &ctx)
+//         .map_err(|e| error::ErrorInternalServerError(format!("Template rendering error: {:?}", e)))?;
+
+//     Ok(HttpResponse::Ok().body(rendered))
+// }
