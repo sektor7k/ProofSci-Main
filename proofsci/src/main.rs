@@ -13,7 +13,10 @@ use actix_web::{
 };
 use dotenv::dotenv;
 use serde::*;
-use sqlx::{sqlite::{SqliteConnectOptions, SqliteJournalMode}, ConnectOptions, SqlitePool};
+use sqlx::{
+    sqlite::{SqliteConnectOptions, SqliteJournalMode},
+    ConnectOptions, SqlitePool,
+};
 use std::str::FromStr;
 use tera::{Context, Tera};
 use validator;
@@ -27,10 +30,8 @@ async fn main() -> std::io::Result<()> {
 
     let db = env::var("DATABASE_URL").expect("Database_url not found in env");
     let conn = sqlx::SqlitePool::connect(&db).await.unwrap();
-    
 
     HttpServer::new(move || {
-
         let mut templates = Tera::new("templates/**/*").expect("errors in tera templates");
         templates.autoescape_on(vec!["tera"]);
 
@@ -48,18 +49,26 @@ async fn main() -> std::io::Result<()> {
             .app_data(web::Data::new(templates))
             .app_data(web::Data::new(conn.clone()))
             .service(web::resource("/").route(web::get().to(index)))
-            .service(web::resource("/profile").route(web::get().to(index2)))
-            .service(web::resource("/create").route(web::post().to(post_form))
-            .route(web::get().to(create)))
+            .service(web::resource("/profile").route(web::get().to(index2).to(profile)))
+            .service(
+                web::resource("/create")
+                    .route(web::post().to(post_form))
+                    .route(web::get().to(create)),
+            )
             .service(
                 web::resource("/login")
                     .route(web::get().to(login))
-                    .route(web::post().to(post_login)), 
+                    .route(web::post().to(post_login)),
             )
             .service(
                 web::resource("signin")
                     .route(web::get().to(signin))
                     .route(web::post().to(post_signin)),
+            )
+            .service(
+                web::resource("/updateprofile")
+                    .route(web::post().to(post_edit_profile))
+                    .route(web::get().to(update)),
             )
             .service(web::resource("logout").route(web::get().to(logout)))
             .service(Files::new("/css", "css").show_files_listing())
@@ -68,6 +77,7 @@ async fn main() -> std::io::Result<()> {
             .service(Files::new("/wp-includes", "wp-includes").show_files_listing())
             .service(Files::new("/Keplr", "Keplr").show_files_listing())
             .service(Files::new("/createform", "createform").show_files_listing())
+            .service(Files::new("/profileElement", "profileElement").show_files_listing())
     })
     .bind(("127.0.0.1", 8080))?
     .run()

@@ -34,14 +34,29 @@ pub struct User {
     password: String,
 }
 
+
+
+
 #[derive(Debug, Deserialize, sqlx::FromRow, Serialize)]
 pub struct FormUser {
     nft_name: String,
     nft_description: String,
     project_name: String,
-    project_description: String
+    project_description: String,
+    clinical_stage: String,
+    research_area: String,
+    patent_status: String,
+    country: String
 }
 
+#[derive(Debug, Deserialize, sqlx::FromRow, Serialize)]
+pub struct EditProfile{
+    username: String,
+    
+}
+
+
+// market.html render
 pub async fn index(tmpl: web::Data<Tera>, session: Session) -> Result<HttpResponse, Error> {
     let mut ctx = Context::new();
 
@@ -54,11 +69,16 @@ pub async fn index(tmpl: web::Data<Tera>, session: Session) -> Result<HttpRespon
         .map_err(error::ErrorInternalServerError)?;
     Ok(HttpResponse::Ok().body(a))
 }
+
+// profile.html render
 pub async fn index2(tmpl: web::Data<Tera>, session: Session) -> Result<HttpResponse, Error> {
     let mut ctx = Context::new();
 
     if let Some(user) = session.get::<String>("user")? {
         ctx.insert("user", &user)
+    }
+    if let Some(email) = session.get::<String>("email")? {
+        ctx.insert("email", &email)
     }
 
     let a = tmpl
@@ -67,6 +87,8 @@ pub async fn index2(tmpl: web::Data<Tera>, session: Session) -> Result<HttpRespo
     Ok(HttpResponse::Ok().body(a))
 }
 
+
+// login.html render
 pub async fn login(tmpl: web::Data<Tera>, session: Session) -> Result<HttpResponse, Error> {
     if let Some(user) = session.get::<String>("user")? {
         return Ok(redirct("/"));
@@ -78,6 +100,8 @@ pub async fn login(tmpl: web::Data<Tera>, session: Session) -> Result<HttpRespon
     Ok(HttpResponse::Ok().body(a))
 }
 
+
+// login verilerini vri tabanında kontrol ettirip girişe izin veya red vermek
 pub async fn post_login(
     _tmpl: web::Data<Tera>,
     form: web::Form<LoginUser>,
@@ -98,6 +122,7 @@ pub async fn post_login(
             Ok(user) => {
                 if bcrypt::verify(&login_form.password, &user.password).unwrap() {
                     session.insert("user", &user.username)?;
+                    session.insert("email", &user.email)?;
                     session.insert("user_id", &user.id)?;
                     //session.set("user_id", &user.id); 
                     return Ok(redirct("/"));
@@ -131,18 +156,24 @@ pub async fn post_login(
     //     .map_err(error::ErrorInternalServerError)?;
 }
 
+
+// kullanıcı çıkış yapmak
 pub async fn logout(session: Session) -> Result<HttpResponse, Error> {
     session.purge();
 
     return Ok(redirct("/"));
 }
 
+
+// belirtilen lokasyona gitmek
 pub fn redirct(location: &str) -> HttpResponse {
     HttpResponse::Found()
         .append_header((http::header::LOCATION, location))
         .finish()
 }
 
+
+// signin.html render
 pub async fn signin(tmpl: web::Data<Tera>, session: Session) -> Result<HttpResponse, Error> {
     if let Some(user) = session.get::<String>("user")? {
         return Ok(redirct("/"));
@@ -154,6 +185,9 @@ pub async fn signin(tmpl: web::Data<Tera>, session: Session) -> Result<HttpRespo
     Ok(HttpResponse::Ok().body(a))
 }
 
+
+
+// signin verilerini veri tabanına göndermek
 pub async fn post_signin(
     _tmpl: web::Data<Tera>,
     form2: web::Form<SigninUser>,
@@ -175,6 +209,8 @@ pub async fn post_signin(
         match add_user {
             Ok(_) => {
                 session.insert("user", &user.username)?;
+                session.insert("email", &user.email)?;
+                
                 
                 return Ok(redirct("/"));
             }
@@ -193,6 +229,8 @@ pub async fn post_signin(
     return Ok(redirct("/signin"));
 }
 
+
+// create.html render
 pub async fn create(tmpl: web::Data<Tera>, session: Session) -> Result<HttpResponse, Error> {
     let mut ctx = Context::new();
 
@@ -206,6 +244,8 @@ pub async fn create(tmpl: web::Data<Tera>, session: Session) -> Result<HttpRespo
     Ok(HttpResponse::Ok().body(a))
 }
 
+
+// kullanıcı form verilerini veri tabanına ilişkilendirerek gönderme
 pub async fn post_form(
     _tmpl: web::Data<Tera>,
     form2: web::Form<FormUser>,
@@ -220,11 +260,17 @@ pub async fn post_form(
 
     let user = form2.into_inner();
 
-    let forms = sqlx::query("insert into forms (nft_name, nft_description, project_name, project_description, user_id ) values($1, $2, $3, $4, $5)")
+    
+
+    let forms = sqlx::query("insert into forms (nft_name, nft_description, project_name, project_description, clinical_stage, research_area, patent_status, country, user_id ) values($1, $2, $3, $4, $5, $6, $7, $8, $9)")
         .bind(&user.nft_name)
         .bind(&user.nft_description)
         .bind(&user.project_name)
         .bind(&user.project_description)
+        .bind(&user.clinical_stage)
+        .bind(&user.research_area)
+        .bind(&user.patent_status)
+        .bind(&user.country)
         .bind(user_id)
         .execute(&**conn)
         .await;
@@ -248,37 +294,84 @@ pub async fn post_form(
     };
 }
 
-// pub async fn get_forms(conn: &SqlitePool, user_id: i32) -> Result<Vec<FormUser>, sqlx::Error> {
-//     let forms = sqlx::query_as::<_, FormUser>("SELECT * FROM forms WHERE user_id = $1")
-//         .bind(user_id)
-//         .fetch_all(conn)
-//         .await?;
-
-//     Ok(forms)
-// }
 
 
+// kullanıcının verilerini veri tabanından profile yansıtma
+pub async fn profile(
+    _tmpl: web::Data<Tera>,
+    session: Session,
+    conn: web::Data<SqlitePool>,
+) -> Result<HttpResponse, Error> {
+    let user_id = session.get::<i32>("user_id").unwrap_or(Some(0));
+
+    let forms:Vec<FormUser> = sqlx::query_as::<_,FormUser>("SELECT * FROM forms WHERE user_id = $1")
+        .bind(user_id)
+        .fetch_all(&**conn)
+        .await
+        .map_err(|e| {
+            error::ErrorInternalServerError(format!("Error querying database: {:?}", e))
+        })?; 
+    
+println!("{:?}",forms);
+    
 
 
-// pub async fn profile(
-//     tmpl: web::Data<Tera>,
-//     session: Session,
-//     conn: web::Data<SqlitePool>,
-// ) -> Result<HttpResponse, Error> {
-//     // Oturum açmış kullanıcının kimliğini al
-//     let user_id = session.get::<i32>("user_id").unwrap_or(Some(0));
+    let mut ctx = tera::Context::new();
+    ctx.insert("forms", &forms);
+    if let Some(user) = session.get::<String>("user")? {
+        ctx.insert("user", &user)
+        
+    }
+    if let Some(email) = session.get::<String>("email")? {
+        ctx.insert("email", &email)
+        
+    }
 
-//     // Kullanıcının formlarını al
-//     let forms = get_forms(&**conn, user_id.unwrap_or(0)).await?;
+    let rendered = _tmpl
+        .render("profile.html", &ctx)
+        .map_err(error::ErrorInternalServerError)?;
 
-//     // Şablon bağlamını oluştur
-//     let mut ctx = tera::Context::new();
-//     ctx.insert("forms", &forms);
+    Ok(HttpResponse::Ok().content_type("text/html").body(rendered))
+}
 
-//     // Şablonu işle ve HTTP yanıtını oluştur
-//     let rendered = tmpl
-//         .render("profile.html", &ctx)
-//         .map_err(|e| error::ErrorInternalServerError(format!("Template rendering error: {:?}", e)))?;
 
-//     Ok(HttpResponse::Ok().body(rendered))
-// }
+
+
+
+
+// updateprofile.html render
+pub async fn update(tmpl: web::Data<Tera>, session: Session) -> Result<HttpResponse, Error> {
+    let mut ctx = Context::new();
+
+    if let Some(user) = session.get::<String>("user")? {
+        ctx.insert("user", &user)
+    }
+
+    let a = tmpl
+        .render("updateprofile.html", &ctx)
+        .map_err(error::ErrorInternalServerError)?;
+    Ok(HttpResponse::Ok().body(a))
+}
+
+
+// user name  güncelleme
+pub async fn post_edit_profile(
+    _tmpl: web::Data<Tera>,
+    form: web::Form<EditProfile>,
+    session: Session,
+    conn: web::Data<SqlitePool>,
+) -> Result<HttpResponse, Error> {
+    let old_username = session.get::<String>("user").unwrap().unwrap();
+    let new_username = form.username.clone();
+
+    sqlx::query("UPDATE users SET username = $1 WHERE username = $2")
+        .bind(&new_username)
+        .bind(&old_username)
+        .execute(&**conn)
+        .await;
+
+    // Güncellenen kullanıcının username bilgisi, oturum verilerinde de güncellenmeli
+    session.insert("user", &new_username)?;
+
+    Ok(redirct("/profile"))
+}

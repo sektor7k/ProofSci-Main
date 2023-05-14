@@ -1154,170 +1154,37 @@
 
             
 
-            <h1>Create Project Form</h1>
+            <h1>Update Profile</h1>
             <div class="container">
-                <form action="/create" method="post">
-                    <div id="avatar-container">
-                        <img id="avatar-preview" src="#" alt="">
-                        <div class="elementor-element elementor-element-25cf7f6 elementor-widget elementor-widget-button"
-                            data-id="25cf7f6" data-element_type="widget" data-widget_type="button.default"
-                            style="margin-top: 20px;">
-                            <div class="elementor-widget-container">
-                                <div class="elementor-button-wrapper">
-                                    <button id="connect-btn"
-                                        class="elementor-button-link elementor-button elementor-size-sm" role="button"
-                                        style="border: none;">
-                                        <span class="elementor-button-content-wrapper">
-                                            <span class="elementor-button-text" id="address"><label for="avatar">NFT
-                                                    IMG</label></span>
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                <form action="/updateprofile" method="post">
+                    
+                    <div class="form-group">
+                        <label for="nft-name">Update Username </label>
+                        <input type="text" id="nft-name" name="update_username" required>
+                    </div>
+                    
+                    
+                    
 
-                        <input type="file" id="avatar" name="avatar" accept="image/*" onchange="previewAvatar(event)">
-                    </div>
-                    <div class="form-group">
-                        <label for="nft-name">NFT Name </label>
-                        <input type="text" id="nft-name" name="nft_name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="nft-aciklama">NFT Descriptin</label>
-                        <textarea id="nft-aciklama" name="nft_description" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="proje-adi">Project Name </label>
-                        <input type="text" id="proje-adi" name="project_name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="proje-aciklama">Project Description</label>
-                        <textarea id="proje-aciklama" name="project_description" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="klinik-asama">Clinical Stage</label>
-                        <select id="klinik-asama" name="clinical_stage" required>
-                            <option value="">Please select one</option>
-                            <option value="Not applicable">Not applicable</option>
-                            <option value="Clinical Trials">Clinical Trials</option>
-                            <option value="Early Stage">Early Stage</option>
-                            <option value="Preclinical">Preclinical</option>
-                            <option value="Research">Research</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="ara">Research Area</label>
-                        <select id="ara" name="research_area" required>
-                            <option value="">Please select one</option>
-                            <option value="Health">Health</option>
-                            <option value="Education">Education</option>
-                            <option value="Gıda">Gıda</option>
-                            <option value="Food">Food</option>
-                            <option value="Agriculture">Agriculture</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="patent-durumu">Patent Status</label>
-                        <select id="patent-durumu" name="patent_status" required>
-                            <option value="">Please select one</option>
-                            <option value="No Patent Application Filed">No Patent Application Filed</option>
-                            <option value="Patent Application Filed">Patent Application Filed</option>
-                            <option value="Patent Application Approved">Patent Application Approved</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="ulke">Country</label>
-                        <select id="ulke" name="country" required>
-                            <option value="">Please select one</option>
-                            <option value="Algeria">Algeria</option>
-                            <option value="Argentina">Argentina</option>
-                            <option value="Australia">Australia</option>
-                            <option value="Austria">Austria</option>
-                            <option value="Belgium">Belgium</option>
-                            <option value="Bangladesh">Bangladesh</option>
-                            <option value="Brazil">Brazil</option>
-                            <option value="Chile">Chile</option>
-                            <option value="China">China</option>
-                            <option value="Hong Kong SAR">Hong Kong SAR</option>
-                            <option value="Czechia">Czechia</option>
-                            <option value="Denmark">Denmark</option>
-                            <option value="Egypt">Egypt</option>
-                            <option value="Ecuador">Ecuador</option>
-                            <option value="Finland">Finland</option>
-                            <option value="France">France</option>
-                            <option value="Germany">Germany</option>
-                            <option value="Greece">Greece</option>
-                            <option value="Hungary">Hungary</option>
-                            <option value="India">India</option>
-                            <option value="Israel">Israel</option>
-                            <option value="Italy">Italy</option>
-                            <option value="Kazakhstan">Kazakhstan</option>
-                            <option value="Kuwait">Kuwait</option>
-                            <option value="Peru">Peru</option>
-                            <option value="Portugal">Portugal</option>
-                            <option value="Russia">Russia</option>
-                            <option value="Saudi Arabia">Saudi Arabia</option>
-                            <option value="Singapore">Singapore</option>
-                            <option value="Kazakhstan">Kazakhstan</option>
-                            <option value="Ecuador">Ecuador</option>
-                            <option value="Sweden">Sweden</option>
-                            <option value="Switzerland">Switzerland</option>
-                            <option value="Japan">Japan</option>
-                            <option value="Turkey">Turkey</option>
-                            <option value="United Arab Emirates">United Arab Emirates</option>
-                            <option value="Thailand">Thailand</option>
-                            <option value="United Kingdom">United Kingdom</option>
-                            <option value="United States">United States</option>
-                            <option value="Uzbekistan">Uzbekistan</option>
-                            <option value="Qatar">Qatar</option>
-                            <option value="Romania">Romania</option>
-                            <option value="Indonesia">Indonesia</option>
-                            <option value="Ukraine">Ukraine</option>
-                            <option value="New Zealand">New Zealand</option>
-                            <option value="Egypt">Egypt</option>
-                            <option value="Netherlands">Netherlands</option>
-                            <option value="Norway">Norway</option>
-                        </select>
-
-                    </div>
-
-
-                    {% if user %}
-                    <div class="elementor-element elementor-element-25cf7f6 elementor-widget elementor-widget-button"
-                        data-id="25cf7f6" data-element_type="widget" data-widget_type="button.default"
-                        style="margin-top: 30px;">
-                        <div class="elementor-widget-container">
-                            <div class="elementor-button-wrapper">
-                                <button id="connect-btn" type="Submit"
-                                    class="elementor-button-link elementor-button elementor-size-sm" role="button"
-                                    style="border: none; width: 100px;">
-                                    <span class="elementor-button-content-wrapper">
-                                        <span class="elementor-button-text" id="address">Create</span>
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    {% else %}
+                    
 
                     <div class="elementor-element elementor-element-25cf7f6 elementor-widget elementor-widget-button"
                         data-id="25cf7f6" data-element_type="widget" data-widget_type="button.default"
                         style="margin-top: 30px;">
                         <div class="elementor-widget-container">
                             <div class="elementor-button-wrapper">
-                                <button onclick="location.href='/login'" id="connect-btn" type="Submit"
+                                <button  id="connect-btn" type="Submit"
                                     class="elementor-button-link elementor-button elementor-size-sm" role="button"
                                     style="border: none; width: 100px;">
                                     <span class="elementor-button-content-wrapper">
-                                        <span class="elementor-button-text" id="address">Create</span>
+                                        <span class="elementor-button-text" id="address">Update</span>
                                     </span>
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    {%endif%}
+                    
 
 
                 </form>
