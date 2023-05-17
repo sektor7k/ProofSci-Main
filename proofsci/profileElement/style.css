@@ -94,7 +94,7 @@ a { text-decoration: none; }
 li { list-style: none; }
 
 button {
-  color: inherit;
+  color: rgb(29, 173, 199);
   background: none;
   border: none;
   font: inherit;
@@ -384,7 +384,7 @@ header .container {
   color: var(--white);
 }
 
-.add-to-whishlist.active { color: var(--red-crayola); }
+.add-to-whishlist.active { color: rgb(29, 173, 199); }
 
 .add-to-whishlist:is(:hover, :focus) { --white: hsl(180, 97%, 25%); }
 
@@ -411,7 +411,7 @@ header .container {
 
 .product-title { margin-bottom: 15px; }
 
-.product-card:is(:hover, :focus) .product-title { color: var(--red-crayola); }
+.product-card:is(:hover, :focus) .product-title { color: rgb(29, 173, 199); }
 
 .product-meta {
   display: flex;
@@ -544,7 +544,7 @@ header .container {
   transition: var(--transition);
 }
 
-.about-item:hover .about-card-title { color: var(--golden-puppy); }
+.about-item:hover .about-card-title { color: rgb(29, 173, 199); }
 
 .about-card-text {
   font-size: var(--fs-7);

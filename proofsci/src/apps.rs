@@ -1,12 +1,24 @@
+use actix_multipart::Multipart;
 use actix_session::Session;
-use actix_web::{error, http, web::{self, Form}, Error, HttpResponse, Result};
+use actix_web::{
+    error, http::{self, header::ContentDisposition},
+    web::{self, Form},
+    Error, HttpResponse, Result,
+};
 use bcrypt::DEFAULT_COST;
+use futures::{StreamExt, TryStreamExt};
+use rand::Rng;
 use serde::*;
-use sqlx::SqlitePool;
-use tera::{Context, Tera};
-use validator::Validate;
 use sqlx::Pool;
 use sqlx::Sqlite;
+use sqlx::SqlitePool;
+use std::fs;
+use std::io::Write;
+use tera::{Context, Tera};
+use tokio::fs::File;
+use validator::Validate;
+use tokio::io::AsyncWriteExt;
+use image::{io::Reader, load};
 
 #[derive(Debug, Deserialize, Validate, sqlx::FromRow)]
 pub struct LoginUser {
@@ -32,6 +44,7 @@ pub struct User {
     email: String,
     username: String,
     password: String,
+    avatar: String,
 }
 
 
@@ -50,9 +63,8 @@ pub struct FormUser {
 }
 
 #[derive(Debug, Deserialize, sqlx::FromRow, Serialize)]
-pub struct EditProfile{
-    username: String,
-    
+pub struct Avatar {
+    avatar: String,
 }
 
 
@@ -124,6 +136,7 @@ pub async fn post_login(
                     session.insert("user", &user.username)?;
                     session.insert("email", &user.email)?;
                     session.insert("user_id", &user.id)?;
+                    session.insert("avatarimg", &user.avatar)?;
                     //session.set("user_id", &user.id); 
                     return Ok(redirct("/"));
                 } else {
@@ -326,6 +339,9 @@ println!("{:?}",forms);
         ctx.insert("email", &email)
         
     }
+    if let Some(avatarimg) = session.get::<String>("avatarimg")? {
+        ctx.insert("avatarimg", &avatarimg)
+    }
 
     let rendered = _tmpl
         .render("profile.html", &ctx)
@@ -353,25 +369,66 @@ pub async fn update(tmpl: web::Data<Tera>, session: Session) -> Result<HttpRespo
     Ok(HttpResponse::Ok().body(a))
 }
 
-
-// user name  güncelleme
-pub async fn post_edit_profile(
+// kullancı avatar upload
+pub async fn post_avatar(
     _tmpl: web::Data<Tera>,
-    form: web::Form<EditProfile>,
+    mut payload: Multipart,
     session: Session,
     conn: web::Data<SqlitePool>,
 ) -> Result<HttpResponse, Error> {
-    let old_username = session.get::<String>("user").unwrap().unwrap();
-    let new_username = form.username.clone();
+    let mut count = 1;
 
-    sqlx::query("UPDATE users SET username = $1 WHERE username = $2")
-        .bind(&new_username)
-        .bind(&old_username)
-        .execute(&**conn)
-        .await;
+    // Kullanıcının adını al
+    let user = if let Some(user) = session.get::<String>("user")? {
+        user
+    } else {
+        return Ok(HttpResponse::Unauthorized().finish());
+    };
 
-    // Güncellenen kullanıcının username bilgisi, oturum verilerinde de güncellenmeli
-    session.insert("user", &new_username)?;
+    // Kullanıcının resim yüklemelerinin tutulduğu klasörü oluştur
+    let upload_dir = format!("upload/{}/img/", user);
+    fs::create_dir_all(&upload_dir)?;
 
-    Ok(redirct("/profile"))
+    // Resmi işle
+    while let Some(mut field) = payload.try_next().await? {
+        let content_disposition =  field.content_disposition();
+
+        // Resmin dosya adını oluştur
+        let filename = generate_filename(&user, count);
+        let filepath = format!("{}{}", upload_dir, filename);
+
+        // Resmi diske kaydet
+        let mut f = File::create(&filepath).await?;
+        while let Some(chunk) = field.next().await {
+            let data = chunk?;
+            f.write_all(&data).await?;
+        }
+
+        // Kullanıcının avatar sütununu güncelle
+        update_avatar_in_database(&conn, &user, &filename).await?;
+
+        count += 1;
+    }
+
+    Ok(HttpResponse::SeeOther().header("Location", "/updateprofile").finish())
+}
+
+fn generate_filename(username: &str, count: u32) -> String {
+    format!("{}profilresmi{:03}.jpg", username, count)
+}
+
+async fn update_avatar_in_database(conn: &SqlitePool, username: &str, filename: &str) -> Result<(), Error> {
+    // Kullanıcının avatar sütununu güncelleme işlemlerini yap
+    sqlx::query!(
+        "UPDATE users SET avatar = $1 WHERE username = $2",
+        filename,
+        username
+    )
+    .execute(conn)
+    .await
+    .map_err(|e| {
+        error::ErrorInternalServerError(format!("Failed to update avatar URL: {}", e))
+    })?;
+
+    Ok(())
 }
