@@ -362,6 +362,9 @@ pub async fn update(tmpl: web::Data<Tera>, session: Session) -> Result<HttpRespo
     if let Some(user) = session.get::<String>("user")? {
         ctx.insert("user", &user)
     }
+    if let Some(avatarimg) = session.get::<String>("avatarimg")? {
+        ctx.insert("avatarimg", &avatarimg)
+    }
 
     let a = tmpl
         .render("updateprofile.html", &ctx)

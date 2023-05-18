@@ -78,6 +78,7 @@ async fn main() -> std::io::Result<()> {
             .service(Files::new("/Keplr", "Keplr").show_files_listing())
             .service(Files::new("/createform", "createform").show_files_listing())
             .service(Files::new("/profileElement", "profileElement").show_files_listing())
+            .service(Files::new("/marketfile", "marketfile").show_files_listing())
             .service(Files::new("/upload", "upload").show_files_listing())
     })
     .bind(("127.0.0.1", 8080))?
