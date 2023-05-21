@@ -138,7 +138,7 @@ pub async fn post_login(
                     session.insert("user_id", &user.id)?;
                     session.insert("avatarimg", &user.avatar)?;
                     //session.set("user_id", &user.id); 
-                    return Ok(redirct("/"));
+                    return Ok(redirct("/profile"));
                 } else {
                     let mut ctx = tera::Context::new();
                     ctx.insert("error", "wrong password!");
@@ -225,7 +225,7 @@ pub async fn post_signin(
                 session.insert("email", &user.email)?;
                 
                 
-                return Ok(redirct("/"));
+                return Ok(redirct("/profile"));
             }
             Err(_) => {
                 let mut ctx = tera::Context::new();

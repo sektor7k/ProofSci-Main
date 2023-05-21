@@ -1002,7 +1002,10 @@
                             </div>
                         </div>
                     </div>
-                    <script src="/Keplr/keplr.js"></script>
+                    
+                    <script src="/keplr/keplr.js"></script>
+                    
+                    
 
                     <div class="elementor-element elementor-element-63ca5a3 elementor-widget__width-auto elementor-hidden-desktop elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-image"
                         data-id="63ca5a3" data-element_type="widget" data-widget_type="image.default">
@@ -1142,7 +1145,7 @@
                     </a>
                     {% endfor %} -->
 
-            <section class="hero" style="position: relative;top: -120px;">
+            <section class="hero" style="position: relative;top: -60px;">
                 <div class="container" style="margin-top: 0%;">
 
                     <div class="hero-content" style="margin-top: 0%;">
@@ -1272,12 +1275,70 @@
 
 
                     </div>
+                    <link rel="preconnect" href="https://fonts.googleapis.com">
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&display=swap"
+                        rel="stylesheet">
+                    <link rel="stylesheet" href="/marketfile/css/style.css">
 
                     <div class="product-list">
-                        {% for form in forms %}
+                        
+
+                        <div class="slider" data-slider>
+                            <ul class="slider-container" data-slider-container>
+                                {% for form in forms %}
+                                <li class="slider-item">
+                                    <div class="collection-card card">
+
+                                        <figure class="card-banner img-holder" style="--width: 540; --height: 500;">
+                                            <img src="/profileElement/nft.png" width="500" height="500"
+                                                loading="lazy" alt="Digital Collection" class="img-cover">
+                                        </figure>
+
+                                        <div class="card-content">
+
+                                            <div class="card-profile">
+                                                <img src="/upload/{{user}}/img/{{avatarimg}}" width="64" height="64"
+                                                    loading="lazy" alt="CutieGirl profile">
+
+                                                <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
+                                            </div>
+
+                                            <h3 class="title-md card-title">
+                                                <a href="#" class="link:hover">{{form.project_name}}</a>
+                                            </h3>
+
+                                            <p class="label-md card-author">
+
+                                                <script>
+                                                    var text = "{{form.project_description}}";
+                                                    var maxLength = 200;
+
+                                                    if (text.length <= maxLength) {
+                                                        document.write(text);
+                                                    } else {
+                                                        var truncatedText = text.substring(0, maxLength) + "...";
+                                                        document.write(truncatedText);
+                                                    }
+                                                </script>
+                                            </p>
+
+
+
+                                        </div>
+
+                                    </div>
+                                </li>
+                                
+                                
+                                
+                            </ul>
+                        </div>
+
+                        
 
                         <div class="product-item">
-
+                            <!-- 
                             <div class="product-card" tabindex="0" style="width: 300px;">
 
                                 <figure class="product-banner">
@@ -1313,8 +1374,9 @@
                                 </div>
                             </div>
 
-                        </div>
+                        </div> -->
                         {% endfor %}
+                            
 
 
 
@@ -1322,10 +1384,10 @@
 
 
 
+
+                        </div>
 
                     </div>
-
-                </div>
             </section>
 
 

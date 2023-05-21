@@ -682,11 +682,12 @@ body {
   gap: 16px;
   text-align: left;
   padding: 20px;
+  background: none;
 }
 
 .qna-btn ion-icon { flex-shrink: 0; }
 
-.qna-card.active .qna-btn { background-color: var(--gunmetal); }
+.qna-card.active .qna-btn { background: none; }
 
 .qna-card.active .qna-btn > * { color: var(--blue-violet); }
 
