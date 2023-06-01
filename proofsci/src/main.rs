@@ -48,7 +48,9 @@ async fn main() -> std::io::Result<()> {
             )
             .app_data(web::Data::new(templates))
             .app_data(web::Data::new(conn.clone()))
-            .service(web::resource("/").route(web::get().to(index)))
+            .service(web::resource("/").route(web::get().to(mainindex)))
+            .service(web::resource("/market").route(web::get().to(index)))
+            
             .service(web::resource("/profile").route(web::get().to(index2).to(profile)))
             .service(
                 web::resource("/create")

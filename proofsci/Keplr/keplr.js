@@ -24,7 +24,7 @@ async function connect() {
   const addressEl = document.getElementById("address");
   addressEl.innerText = accounts[0].address;
   addressEl.style.fontSize = "5px";
-  
+   
 
 }
 

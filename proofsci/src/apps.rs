@@ -67,7 +67,16 @@ pub struct Avatar {
     avatar: String,
 }
 
+pub async fn mainindex(tmpl: web::Data<Tera>, session: Session) -> Result<HttpResponse, Error> {
+    let mut ctx = Context::new();
 
+    
+
+    let a = tmpl
+        .render("index.html", &ctx)
+        .map_err(error::ErrorInternalServerError)?;
+    Ok(HttpResponse::Ok().body(a))
+}
 // market.html render
 pub async fn index(tmpl: web::Data<Tera>, session: Session) -> Result<HttpResponse, Error> {
     let mut ctx = Context::new();
@@ -81,6 +90,7 @@ pub async fn index(tmpl: web::Data<Tera>, session: Session) -> Result<HttpRespon
         .map_err(error::ErrorInternalServerError)?;
     Ok(HttpResponse::Ok().body(a))
 }
+
 
 // profile.html render
 pub async fn index2(tmpl: web::Data<Tera>, session: Session) -> Result<HttpResponse, Error> {
