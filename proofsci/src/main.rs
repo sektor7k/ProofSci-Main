@@ -1,27 +1,32 @@
 use std::env;
 
 use crate::apps::*;
+use crate::login::*;
+use crate::signin::*;
+use crate::create::*;
+use crate::profile::*;
+use crate::avatar::*;
+use crate::market::*;
 use actix_files::Files;
 use actix_session::{
-    config::PersistentSession, storage::CookieSessionStore, Session, SessionMiddleware,
+    storage::CookieSessionStore,SessionMiddleware,
 };
 use actix_web::{
-    cookie::{self, Key},
-    error, get, http,
+    cookie::Key,
     middleware::Logger,
-    web, App, Error, HttpResponse, HttpServer, Responder, Result,
+    web, App, HttpServer,
 };
 use dotenv::dotenv;
-use serde::*;
-use sqlx::{
-    sqlite::{SqliteConnectOptions, SqliteJournalMode},
-    ConnectOptions, SqlitePool,
-};
-use std::str::FromStr;
-use tera::{Context, Tera};
-use validator;
+use tera:: Tera;
+
 
 mod apps;
+mod login;
+mod signin;
+mod create;
+mod profile;
+mod avatar;
+mod market;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
