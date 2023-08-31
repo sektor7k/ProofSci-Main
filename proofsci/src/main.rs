@@ -82,7 +82,6 @@ async fn main() -> std::io::Result<()> {
             .service(Files::new("/login", "login").show_files_listing())
             .service(Files::new("/wp-content", "wp-content").show_files_listing())
             .service(Files::new("/wp-includes", "wp-includes").show_files_listing())
-            .service(Files::new("/keplr", "keplr").show_files_listing())
             .service(Files::new("/createform", "createform").show_files_listing())
             .service(Files::new("/profileElement", "profileElement").show_files_listing())
             .service(Files::new("/marketfile", "marketfile").show_files_listing())

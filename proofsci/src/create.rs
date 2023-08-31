@@ -1,7 +1,7 @@
 
 use actix_session::Session;
 use actix_web::{
-    error,
+    error  ,
     web::{self},
     Error, HttpResponse, Result,
 };
